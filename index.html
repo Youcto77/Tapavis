@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== SEO de base ===== -->
+    <title>TapAvis — Cartes NFC Avis Google pour Commerçants | Plus d'avis, plus de clients</title>
+    <meta name="description" content="Cartes NFC premium qui redirigent vos clients vers votre page d'avis Google en un geste. Compatible iPhone &amp; Android, sans abonnement, sans application. Commandez votre carte TapAvis.">
+    <meta name="theme-color" content="#0a0f1e">
+    <meta name="author" content="TapAvis">
+    <link rel="canonical" href="https://www.tapavis.fr/">
+
+    <!-- Open Graph / réseaux sociaux -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="TapAvis">
+    <meta property="og:title" content="TapAvis — Cartes NFC Avis Google pour Commerçants">
+    <meta property="og:description" content="Cartes NFC premium qui redirigent vos clients vers votre page d'avis Google. Compatible iPhone & Android, sans abonnement, sans application.">
+    <meta property="og:url" content="https://www.tapavis.fr/">
+    <meta property="og:image" content="https://www.tapavis.fr/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TapAvis — Cartes NFC Avis Google pour Commerçants">
+    <meta name="twitter:description" content="Cartes NFC premium qui redirigent vos clients vers votre page d'avis Google. Compatible iPhone & Android, sans abonnement, sans application.">
+
+    <!-- Favicon (SVG inline) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0f1e'/%3E%3Crect x='6' y='9' width='20' height='14' rx='3' fill='none' stroke='%233b82f6' stroke-width='2'/%3E%3Cpath d='M11 13.5a4 4 0 010 5M13.5 12a7 7 0 010 8' fill='none' stroke='%2360a5fa' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+
+    <!-- Police : Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Configuration Tailwind — palette premium bleu foncé
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        base: '#0a0f1e',
+                        surface: '#111a2e',
+                        'surface-2': '#16223d',
+                        'surface-3': '#1c2944',
+                        accent: '#1e3a8a',
+                        'accent-bright': '#3b82f6',
+                        'accent-soft': '#60a5fa',
+                        wa: '#25D366',
+                        'wa-dark': '#1ebe5d',
+                        ink: '#94a3b8',
+                        'ink-strong': '#e2e8f0',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        glow: '0 0 60px -15px rgba(59,130,246,0.45)',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* ===== Variables CSS — palette premium bleu foncé ===== */
+        :root {
+            --base: #0a0f1e;
+            --surface: #111a2e;
+            --surface-2: #16223d;
+            --accent: #1e3a8a;
+            --accent-bright: #3b82f6;
+            --accent-soft: #60a5fa;
+            --ink: #94a3b8;
+            --ink-strong: #e2e8f0;
+        }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--base); }
+
+        /* Fond dégradé global subtil */
+        .bg-grid {
+            background-image:
+                radial-gradient(circle at 18% 0%, rgba(59,130,246,0.14), transparent 42%),
+                radial-gradient(circle at 82% 8%, rgba(30,58,138,0.20), transparent 38%);
+        }
+
+        /* Apparition au scroll (fade / slide) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+        }
+        .reveal.in { opacity: 1; transform: none; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(1deg); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        /* Glassmorphism */
+        .glass { background: rgba(17,26,46,0.65); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+        /* Reflet sur la carte */
+        .card-shine { position: relative; overflow: hidden; }
+        .card-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -60%;
+            width: 35%; height: 200%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.22), transparent);
+            transform: rotate(25deg);
+            transition: left .9s ease;
+        }
+        .card-shine:hover::after { left: 130%; }
+
+        /* Bordure dégradée */
+        .border-grad {
+            position: relative;
+            background:
+                linear-gradient(var(--surface), var(--surface)) padding-box,
+                linear-gradient(135deg, rgba(59,130,246,0.55), rgba(30,58,138,0.15)) border-box;
+            border: 1px solid transparent;
+        }
+
+        /* Style des options du select (fond sombre) */
+        select option { background: #111a2e; color: #e2e8f0; }
+    </style>
+</head>
+<body class="bg-base text-ink font-sans antialiased overflow-x-hidden selection:bg-accent-bright/30 selection:text-white">
+
+    <!-- ============ Header / Navigation ============ -->
+    <header class="sticky top-0 z-50">
+        <div class="mx-auto max-w-6xl px-4">
+            <nav class="mt-3 flex items-center justify-between rounded-2xl border border-white/5 glass px-4 py-3 shadow-lg shadow-black/30">
+                <!-- Logo & Marque -->
+                <a href="#hero" class="flex items-center gap-2.5 group">
+                    <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-tr from-accent to-accent-bright text-white shadow-glow transition-transform duration-300 group-hover:scale-105">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M7 10c.5.8.5 2.2 0 3M9.5 8.5c1 1.5 1 4.5 0 6" stroke-linecap="round"/></svg>
+                    </span>
+                    <span class="text-lg font-extrabold tracking-tight text-white">Tap<span class="text-accent-bright">Avis</span></span>
+                </a>
+
+                <!-- Liens (desktop) -->
+                <div class="hidden md:flex items-center gap-1 text-sm font-medium text-ink">
+                    <a href="#pourquoi" class="rounded-lg px-3 py-2 hover:text-white hover:bg-white/5 transition">Pourquoi</a>
+                    <a href="#tarifs" class="rounded-lg px-3 py-2 hover:text-white hover:bg-white/5 transition">Tarifs</a>
+                    <a href="#faq" class="rounded-lg px-3 py-2 hover:text-white hover:bg-white/5 transition">FAQ</a>
+                    <a href="#commande" class="rounded-lg px-3 py-2 hover:text-white hover:bg-white/5 transition">Contact</a>
+                </div>
+
+                <!-- CTA -->
+                <div class="flex items-center gap-2">
+                    <!-- CTA WhatsApp -->
+                    <!-- TODO: remplacer le numéro WhatsApp (const WHATSAPP_NUMBER dans le <script> final) -->
+                    <a data-wa data-wa-text="Bonjour, j'aimerais des informations sur les cartes TapAvis" class="hidden sm:inline-flex items-center gap-2 rounded-xl bg-wa hover:bg-wa-dark px-4 py-2.5 text-sm font-semibold text-white transition shadow-md shadow-wa/20 active:scale-95">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        WhatsApp
+                    </a>
+
+                    <!-- Menu mobile -->
+                    <button id="nav-toggle" class="md:hidden grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-ink hover:text-white transition" aria-label="Ouvrir le menu">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"/></svg>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Menu mobile (panneau) -->
+            <div id="mobile-menu" class="md:hidden hidden mt-2 rounded-2xl border border-white/5 glass p-2 text-sm font-medium">
+                <a href="#pourquoi" class="block rounded-lg px-4 py-3 text-ink hover:text-white hover:bg-white/5">Pourquoi nous faire confiance</a>
+                <a href="#tarifs" class="block rounded-lg px-4 py-3 text-ink hover:text-white hover:bg-white/5">Tarifs</a>
+                <a href="#faq" class="block rounded-lg px-4 py-3 text-ink hover:text-white hover:bg-white/5">FAQ</a>
+                <a href="#commande" class="block rounded-lg px-4 py-3 text-ink hover:text-white hover:bg-white/5">Commander / Contact</a>
+                <a data-wa data-wa-text="Bonjour, j'aimerais des informations sur les cartes TapAvis" class="mt-1 flex items-center justify-center gap-2 rounded-xl bg-wa px-4 py-3 font-semibold text-white">Support WhatsApp</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============ Hero ============ -->
+    <section id="hero" class="relative overflow-hidden bg-grid scroll-mt-24">
+        <div class="mx-auto max-w-6xl px-4 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+            <!-- Texte -->
+            <div class="reveal space-y-7">
+                <span class="inline-flex items-center gap-2 rounded-full border border-accent-bright/20 bg-accent-bright/10 px-3 py-1 text-xs font-medium text-accent-soft">
+                    <span class="h-1.5 w-1.5 rounded-full bg-accent-bright animate-pulse"></span>
+                    La carte qui transforme vos clients en avis 5★
+                </span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-tight text-white">
+                    Plus d'avis <span class="bg-gradient-to-r from-accent-bright to-accent-soft bg-clip-text text-transparent">Google</span>, en un simple geste.
+                </h1>
+                <p class="max-w-xl text-lg text-ink leading-relaxed">
+                    Vos clients posent leur téléphone sur la carte <strong class="text-ink-strong">TapAvis</strong> et arrivent directement sur votre page d'avis Google. Compatible iPhone &amp; Android, sans application, sans abonnement.
+                </p>
+                <div class="flex flex-wrap gap-3 pt-1">
+                    <a href="#tarifs" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-accent-bright to-accent px-6 py-3.5 font-semibold text-white shadow-glow hover:brightness-110 active:scale-95 transition">
+                        Commander ma carte
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                    </a>
+                    <a href="#pourquoi" class="inline-flex items-center gap-2 rounded-xl border border-white/10 px-6 py-3.5 font-semibold text-ink-strong hover:bg-white/5 transition">
+                        Comment ça marche
+                    </a>
+                </div>
+                <div class="flex flex-wrap items-center gap-x-5 gap-y-2 pt-3 text-sm text-ink">
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-yellow-400">★★★★★</span>
+                        <span>Avis vérifiés</span>
+                    </div>
+                    <span class="hidden sm:block h-4 w-px bg-white/10"></span>
+                    <div class="flex items-center gap-1.5">
+                        <svg class="h-4 w-4 text-wa" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                        Sans abonnement
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visuel carte NFC (image à déposer dans /assets/Tapavis.webp) -->
+            <div class="reveal relative flex justify-center">
+                <!-- Lueur -->
+                <div class="absolute inset-0 -z-10 bg-accent-bright/20 blur-[110px] rounded-full"></div>
+                <div class="animate-float relative w-[380px] sm:w-[500px] rotate-[-4deg]">
+                    <div class="card-shine relative aspect-[3/2] rounded-[1.75rem] overflow-hidden shadow-2xl shadow-accent/40 ring-1 ring-black/10 bg-surface/60">
+                        <!-- Image de la carte : dépose/écrase ton fichier dans /assets/image/Tapavis.webp. L'image s'affiche en entier (object-contain). Passe à "object-cover" si tu préfères remplir tout le cadre quitte à recadrer. -->
+                        <img src="assets/image/Tapavis.webp" alt="Carte NFC TapAvis qui redirige vers la page d'avis Google"
+                             class="absolute inset-0 h-full w-full object-contain"
+                             onerror="this.style.display='none';var p=document.getElementById('card-placeholder');p.classList.remove('hidden');p.classList.add('flex');">
+                        <!-- Emplacement de secours, affiché tant qu'aucune image n'est présente -->
+                        <div id="card-placeholder" class="absolute inset-0 hidden flex-col items-center justify-center gap-3 px-6 text-center">
+                            <svg class="h-10 w-10 text-accent-bright" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15A2.25 2.25 0 002.25 6.75v10.5A2.25 2.25 0 004.5 19.5zm10.5-11.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm-3 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+                            <p class="text-sm font-semibold text-ink-strong">Déposez votre image ici</p>
+                            <p class="text-xs text-ink">assets/image/TapAvis.webp</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Comment ça marche ============ -->
+    <section id="fonctionnement" class="scroll-mt-24 py-24 border-t border-white/5 relative overflow-hidden">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="reveal text-center max-w-2xl mx-auto space-y-3 mb-16">
+                <span class="text-accent-soft text-xs font-semibold uppercase tracking-wider">Comment ça marche</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Comment ça fonctionne ?</h2>
+                <p class="text-ink">Un processus sans friction pour vos clients, conçu pour maximiser votre taux de conversion.</p>
+            </div>
+
+            <div class="relative grid md:grid-cols-3 gap-10 md:gap-6">
+                <!-- Ligne de connexion (desktop) -->
+                <div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-gradient-to-r from-accent-bright/0 via-accent-bright/30 to-accent-bright/0"></div>
+
+                <!-- Étape 1 -->
+                <div class="reveal relative text-center">
+                    <div class="relative mx-auto mb-6 grid h-24 w-24 place-items-center">
+                        <div class="absolute inset-0 rounded-full bg-accent-bright/10 blur-md"></div>
+                        <div class="relative grid h-20 w-20 place-items-center rounded-3xl border border-white/10 bg-surface text-accent-bright">
+                            <svg class="h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3M9 17.25h6"/></svg>
+                        </div>
+                        <span class="absolute -top-1 -right-1 grid h-7 w-7 place-items-center rounded-full bg-gradient-to-tr from-accent-bright to-accent text-white text-sm font-extrabold shadow-glow ring-4 ring-base">1</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Le client approche son téléphone</h3>
+                    <p class="text-sm text-ink leading-relaxed max-w-xs mx-auto">Il suffit de poser la carte NFC sur le comptoir. Le client approche son téléphone ou scanne le QR Code.</p>
+                </div>
+
+                <!-- Étape 2 -->
+                <div class="reveal relative text-center">
+                    <div class="relative mx-auto mb-6 grid h-24 w-24 place-items-center">
+                        <div class="absolute inset-0 rounded-full bg-accent-bright/10 blur-md"></div>
+                        <div class="relative grid h-20 w-20 place-items-center rounded-3xl border border-white/10 bg-surface text-accent-bright">
+                            <svg class="h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+                        </div>
+                        <span class="absolute -top-1 -right-1 grid h-7 w-7 place-items-center rounded-full bg-gradient-to-tr from-accent-bright to-accent text-white text-sm font-extrabold shadow-glow ring-4 ring-base">2</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Redirection automatique</h3>
+                    <p class="text-sm text-ink leading-relaxed max-w-xs mx-auto">Le téléphone s'ouvre instantanément sur votre page Google Avis, sans aucune recherche.</p>
+                </div>
+
+                <!-- Étape 3 -->
+                <div class="reveal relative text-center">
+                    <div class="relative mx-auto mb-6 grid h-24 w-24 place-items-center">
+                        <div class="absolute inset-0 rounded-full bg-accent-bright/10 blur-md"></div>
+                        <div class="relative grid h-20 w-20 place-items-center rounded-3xl border border-white/10 bg-surface text-yellow-400">
+                            <svg class="h-9 w-9" fill="currentColor" viewBox="0 0 24 24"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                        </div>
+                        <span class="absolute -top-1 -right-1 grid h-7 w-7 place-items-center rounded-full bg-gradient-to-tr from-accent-bright to-accent text-white text-sm font-extrabold shadow-glow ring-4 ring-base">3</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Avis en quelques secondes</h3>
+                    <p class="text-sm text-ink leading-relaxed max-w-xs mx-auto">Le client laisse ses 5 étoiles et un commentaire en un clic. Aucune application requise.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Pourquoi nous faire confiance ============ -->
+    <section id="pourquoi" class="scroll-mt-24 py-24 border-t border-white/5">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="reveal text-center max-w-2xl mx-auto space-y-3">
+                <span class="text-accent-soft text-xs font-semibold uppercase tracking-wider">Pourquoi TapAvis</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Pourquoi nous faire confiance ?</h2>
+                <p class="text-ink">Une solution simple, durable et rentable pour développer votre réputation locale.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mt-14">
+                <!-- Carte 1 -->
+                <div class="reveal group rounded-3xl border border-white/10 bg-surface/60 p-7 hover:-translate-y-2 hover:border-accent-bright/40 hover:bg-surface hover:shadow-glow transition-all duration-300">
+                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-accent-bright/10 text-accent-bright mb-5 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-accent-bright group-hover:to-accent group-hover:text-white group-hover:shadow-glow transition">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Plus d'avis Google</h3>
+                    <p class="text-sm text-ink leading-relaxed">Transformez chaque client satisfait en avis en un geste. Plus de friction, plus d'avis laissés naturellement.</p>
+                </div>
+                <!-- Carte 2 -->
+                <div class="reveal group rounded-3xl border border-white/10 bg-surface/60 p-7 hover:-translate-y-2 hover:border-accent-bright/40 hover:bg-surface hover:shadow-glow transition-all duration-300">
+                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-accent-bright/10 text-accent-bright mb-5 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-accent-bright group-hover:to-accent group-hover:text-white group-hover:shadow-glow transition">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">SEO local (Google Maps)</h3>
+                    <p class="text-sm text-ink leading-relaxed">Plus d'avis = une meilleure fiche Google Maps. Remontez dans les résultats locaux et attirez plus de passage.</p>
+                </div>
+                <!-- Carte 3 -->
+                <div class="reveal group rounded-3xl border border-white/10 bg-surface/60 p-7 hover:-translate-y-2 hover:border-accent-bright/40 hover:bg-surface hover:shadow-glow transition-all duration-300">
+                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-accent-bright/10 text-accent-bright mb-5 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-accent-bright group-hover:to-accent group-hover:text-white group-hover:shadow-glow transition">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Compatible iPhone &amp; Android</h3>
+                    <p class="text-sm text-ink leading-relaxed">Fonctionne avec tous les smartphones récents, par simple contact NFC. Universel, immédiat.</p>
+                </div>
+                <!-- Carte 4 -->
+                <div class="reveal group rounded-3xl border border-white/10 bg-surface/60 p-7 hover:-translate-y-2 hover:border-accent-bright/40 hover:bg-surface hover:shadow-glow transition-all duration-300">
+                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-accent-bright/10 text-accent-bright mb-5 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-accent-bright group-hover:to-accent group-hover:text-white group-hover:shadow-glow transition">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Sans abonnement</h3>
+                    <p class="text-sm text-ink leading-relaxed">Un seul paiement, c'est tout. Aucun frais mensuel, aucun engagement, aucune mauvaise surprise.</p>
+                </div>
+                <!-- Carte 5 -->
+                <div class="reveal group rounded-3xl border border-white/10 bg-surface/60 p-7 hover:-translate-y-2 hover:border-accent-bright/40 hover:bg-surface hover:shadow-glow transition-all duration-300">
+                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-accent-bright/10 text-accent-bright mb-5 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-accent-bright group-hover:to-accent group-hover:text-white group-hover:shadow-glow transition">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Sans application</h3>
+                    <p class="text-sm text-ink leading-relaxed">Ni vous ni vos clients n'avez d'appli à installer. Le geste NFC ouvre directement la bonne page.</p>
+                </div>
+                <!-- Carte 6 -->
+                <div class="reveal group rounded-3xl border border-white/10 bg-surface/60 p-7 hover:-translate-y-2 hover:border-accent-bright/40 hover:bg-surface hover:shadow-glow transition-all duration-300">
+                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-accent-bright/10 text-accent-bright mb-5 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-accent-bright group-hover:to-accent group-hover:text-white group-hover:shadow-glow transition">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Réutilisable à vie</h3>
+                    <p class="text-sm text-ink leading-relaxed">Une carte, des milliers d'avis. Durable, robuste et garantie : elle vous accompagne pour des années.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Tarifs ============ -->
+    <section id="tarifs" class="scroll-mt-24 py-24 border-t border-white/5 bg-surface/30">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="reveal text-center max-w-2xl mx-auto space-y-3 mb-14">
+                <span class="text-accent-soft text-xs font-semibold uppercase tracking-wider">Tarifs</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Des tarifs concurrentiels</h2>
+                <p class="text-ink">Un paiement unique, sans abonnement. Choisissez la formule adaptée à votre activité.</p>
+            </div>
+
+            <!-- TODO: remplacer les prix et le contenu des formules par vos valeurs définitives -->
+            <div class="grid md:grid-cols-2 gap-6 items-stretch max-w-3xl mx-auto">
+                <!-- Formule Essentielle -->
+                <div class="reveal flex flex-col rounded-3xl border border-white/10 bg-surface/60 p-8 hover:-translate-y-1.5 hover:border-white/20 transition-all duration-300">
+                    <h3 class="text-lg font-bold text-white">Essentielle</h3>
+                    <p class="text-xs text-ink mt-1">Pour démarrer en toute simplicité.</p>
+                    <div class="flex items-baseline gap-1.5 mt-5">
+                        <span class="text-5xl font-extrabold tracking-tight text-white">40€</span>
+                        <span class="text-sm text-ink">/ unique</span>
+                    </div>
+                    <ul class="mt-7 space-y-3 text-sm text-ink-strong flex-1">
+                        <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-wa" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>1 Carte NFC TapAvis</li>
+                        <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-wa" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Programmée vers votre lien d'avis Google</li>
+                        <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-wa" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Compatible iPhone &amp; Android</li>
+                        <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-wa" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Garantie 3 mois</li>
+                        <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-wa" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Support WhatsApp 7j/7</li>
+                    </ul>
+                    <button onclick="choisirFormule('essentielle')" class="mt-8 w-full rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-ink-strong py-3.5 text-sm font-bold transition active:scale-95">
+                        Choisir cette formule
+                    </button>
+                </div>
+
+                <!-- Formule Duo (mise en avant) -->
+                <div class="reveal flex flex-col rounded-3xl border-grad p-8 relative shadow-glow hover:-translate-y-1.5 transition-all duration-300">
+                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-accent-bright to-accent px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-md">Populaire</span>
+                    <h3 class="text-lg font-bold text-white">Duo</h3>
+                    <p class="text-xs text-ink mt-1">Le meilleur rapport qualité-prix.</p>
+                    <div class="flex items-baseline gap-1.5 mt-5">
+                        <span class="text-5xl font-extrabold tracking-tight text-white">70€</span>
+                        <span class="text-sm text-ink">/ unique</span>
+                    </div>
+                    <ul class="mt-7 space-y-3 text-sm text-ink-strong flex-1">
+                        <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-wa" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>2 Cartes NFC TapAvis</li>
+                        <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-wa" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Programmées vers votre lien d'avis Google</li>
+                        <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-wa" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Compatible iPhone &amp; Android</li>
+                        <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-wa" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Garantie 6 mois</li>
+                        <li class="flex items-start gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-wa" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Support WhatsApp 7j/7</li>
+                    </ul>
+                    <button onclick="choisirFormule('duo')" class="mt-8 w-full rounded-2xl bg-gradient-to-r from-accent-bright to-accent hover:brightness-110 text-white py-3.5 text-sm font-bold transition active:scale-95 shadow-md shadow-accent/30">
+                        Choisir cette formule
+                    </button>
+                </div>
+            </div>
+
+            <p class="reveal text-center text-xs text-ink mt-8">Paiement sécurisé · Livraison partout en France · Sans engagement</p>
+
+            <!-- Zones desservies (intégré à la section Tarifs) -->
+            <div class="reveal mt-12 max-w-3xl mx-auto rounded-2xl border border-emerald-500/40 bg-emerald-500/[0.07] p-6 sm:p-7">
+                <div class="flex items-center gap-2.5 text-emerald-400">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                    <h2 class="text-base sm:text-lg font-extrabold tracking-tight text-emerald-300">Zones desservies</h2>
+                </div>
+                <ul class="mt-4 flex flex-wrap gap-2.5">
+                    <li class="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-sm text-emerald-100">Melun</li>
+                    <li class="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-sm text-emerald-100">Lieusaint</li>
+                    <li class="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-sm text-emerald-100">Boussy-Saint-Antoine</li>
+                    <li class="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-sm text-emerald-100">Quincy-sous-Sénart</li>
+                    <li class="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-sm text-emerald-100">Paris</li>
+                    <li class="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-sm text-emerald-100">Combs-la-Ville</li>
+                    <li class="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-sm text-emerald-100">Moissy-Cramayel</li>
+                </ul>
+                <p class="mt-4 text-xs text-emerald-200/70">Votre commune n'est pas dans la liste ? Écrivez-nous sur WhatsApp, nous étudions toutes les demandes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Témoignages ============ -->
+    <section id="temoignages" class="scroll-mt-24 py-24 border-t border-white/5">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="reveal text-center max-w-2xl mx-auto space-y-3 mb-14">
+                <span class="inline-flex items-center gap-2 rounded-full border border-yellow-400/20 bg-yellow-400/10 px-3 py-1 text-xs font-semibold text-yellow-300">
+                    <span>★★★★★</span> 4,9/5 — commerçants satisfaits
+                </span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Ils boostent leurs avis avec TapAvis</h2>
+                <p class="text-ink">Rejoignez les commerçants qui ont déjà développé leur réputation locale.</p>
+            </div>
+
+            <!-- TODO: remplacer par de vrais avis clients vérifiés (avec leur accord) -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Avis 1 -->
+                <div class="reveal flex flex-col rounded-3xl border border-white/10 bg-surface/60 p-7 hover:-translate-y-1.5 hover:border-white/20 transition-all duration-300">
+                    <div class="mb-4 flex items-center justify-between">
+                        <div class="flex items-center gap-1 text-yellow-400 text-base">★★★★★</div>
+                        <svg class="h-5 w-5" viewBox="0 0 48 48" aria-label="Avis Google"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+                    </div>
+                    <p class="flex-1 text-sm text-ink leading-relaxed">« En quelques minutes c'était en place. Mes clients trouvent ça super pratique, j'ai doublé mes avis Google en un mois. »</p>
+                    <div class="mt-6 flex items-center gap-3 border-t border-white/5 pt-5">
+                        <div class="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-tr from-accent-bright to-accent text-white font-bold text-sm">MC</div>
+                        <div><p class="text-sm font-bold text-white">Michel C.</p><p class="text-xs text-ink">Boulangerie</p></div>
+                    </div>
+                </div>
+                <!-- Avis 2 (mis en avant) -->
+                <div class="reveal flex flex-col rounded-3xl border-grad p-7 relative shadow-glow md:-translate-y-3 hover:-translate-y-4 transition-all duration-300">
+                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-accent-bright to-accent px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-md">Coup de cœur</span>
+                    <div class="mb-4 flex items-center justify-between">
+                        <div class="flex items-center gap-1 text-yellow-400 text-base">★★★★★</div>
+                        <svg class="h-5 w-5" viewBox="0 0 48 48" aria-label="Avis Google"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+                    </div>
+                    <p class="flex-1 text-sm text-ink leading-relaxed">« TapAvis s'occupe de tout. Les clients posent leur téléphone à la fin du rendez-vous, et les avis arrivent tout seuls. »</p>
+                    <div class="mt-6 flex items-center gap-3 border-t border-white/5 pt-5">
+                        <div class="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-tr from-accent-bright to-accent text-white font-bold text-sm">SL</div>
+                        <div><p class="text-sm font-bold text-white">Sarah L.</p><p class="text-xs text-ink">Salon de coiffure</p></div>
+                    </div>
+                </div>
+                <!-- Avis 3 -->
+                <div class="reveal flex flex-col rounded-3xl border border-white/10 bg-surface/60 p-7 hover:-translate-y-1.5 hover:border-white/20 transition-all duration-300">
+                    <div class="mb-4 flex items-center justify-between">
+                        <div class="flex items-center gap-1 text-yellow-400 text-base">★★★★★</div>
+                        <svg class="h-5 w-5" viewBox="0 0 48 48" aria-label="Avis Google"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+                    </div>
+                    <p class="flex-1 text-sm text-ink leading-relaxed">« On présente la carte avec l'addition. Le retour est excellent, investissement vite amorti par rapport à d'autres solutions. »</p>
+                    <div class="mt-6 flex items-center gap-3 border-t border-white/5 pt-5">
+                        <div class="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-tr from-accent-bright to-accent text-white font-bold text-sm">TD</div>
+                        <div><p class="text-sm font-bold text-white">Thomas D.</p><p class="text-xs text-ink">Restaurant</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Formulaire de commande (Formspree) ============ -->
+    <section id="commande" class="scroll-mt-24 py-24 border-t border-white/5 relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[420px] bg-accent-bright/10 blur-[140px] rounded-full pointer-events-none"></div>
+        <div class="mx-auto max-w-5xl px-4 relative">
+            <div class="reveal text-center max-w-2xl mx-auto space-y-3 mb-12">
+                <span class="inline-flex items-center gap-2 rounded-full border border-accent-bright/20 bg-accent-bright/10 px-3 py-1 text-xs font-medium text-accent-soft">
+                    <span class="h-1.5 w-1.5 rounded-full bg-accent-bright animate-pulse"></span> Commandez en 2 minutes
+                </span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Passez commande</h2>
+                <p class="text-ink">Indiquez la formule souhaitée, nous revenons vers vous pour finaliser et programmer votre carte.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-6 lg:gap-8 items-start">
+                <!-- Panneau réassurance -->
+                <div class="reveal rounded-3xl border border-white/10 bg-gradient-to-br from-surface-2/80 to-surface/50 p-8 space-y-6 lg:sticky lg:top-24">
+                    <div>
+                        <h3 class="text-xl font-extrabold text-white tracking-tight">Commande simple &amp; sereine</h3>
+                        <p class="text-sm text-ink mt-1">On s'occupe de tout, de la programmation à la livraison.</p>
+                    </div>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3">
+                            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-wa/15 text-wa"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span>
+                            <div><p class="font-semibold text-ink-strong">Réponse sous 24h</p><p class="text-ink text-xs">On vous recontacte très vite.</p></div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-wa/15 text-wa"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span>
+                            <div><p class="font-semibold text-ink-strong">Programmation incluse</p><p class="text-ink text-xs">Votre lien d'avis Google, configuré pour vous.</p></div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-wa/15 text-wa"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span>
+                            <div><p class="font-semibold text-ink-strong">Sans engagement</p><p class="text-ink text-xs">Un seul paiement, aucun abonnement.</p></div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-wa/15 text-wa"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span>
+                            <div><p class="font-semibold text-ink-strong">Livraison partout en France</p><p class="text-ink text-xs">Garantie 3 à 6 mois selon la formule.</p></div>
+                        </li>
+                    </ul>
+                    <div class="rounded-2xl bg-base/60 border border-white/5 p-4">
+                        <div class="flex items-center gap-1 text-yellow-400 text-sm">★★★★★</div>
+                        <p class="text-xs text-ink mt-1"><span class="text-ink-strong font-semibold">4,9/5</span> — commerçants satisfaits</p>
+                    </div>
+                </div>
+
+                <!-- Formulaire + message de succès -->
+                <div>
+            <!-- Message de succès (masqué par défaut) -->
+            <div id="order-success" class="hidden rounded-3xl border border-wa/30 bg-wa/5 p-8 text-center space-y-3">
+                <div class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-wa/15 text-wa">
+                    <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-white">Commande envoyée, merci !</h3>
+                <p class="text-sm text-ink max-w-md mx-auto">Votre demande a bien été transmise. Nous vous recontactons très vite pour finaliser votre commande de carte TapAvis.</p>
+                <button onclick="recommencerCommande()" class="mt-2 text-sm font-semibold text-accent-bright hover:text-accent-soft transition">Envoyer une autre demande</button>
+            </div>
+
+            <!-- Formulaire -->
+            <!-- TODO: remplacer [TON_ID] par votre identifiant Formspree (https://formspree.io) -->
+            <form id="order-form" action="https://formspree.io/f/[TON_ID]" method="POST" onsubmit="handleOrderSubmit(event)" class="reveal space-y-5 rounded-3xl border border-white/10 bg-surface/60 p-7 md:p-8 shadow-glow">
+                <!-- Anti-spam Formspree + sujet -->
+                <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
+                <input type="hidden" name="_subject" value="Nouvelle commande de carte NFC TapAvis">
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                    <div>
+                        <label for="nom" class="block text-sm font-semibold text-ink-strong">Nom <span class="text-accent-bright">*</span></label>
+                        <input type="text" id="nom" name="nom" required placeholder="Jean Dupont" class="mt-1.5 block w-full rounded-xl border border-white/10 bg-base/60 p-3.5 text-ink-strong placeholder-ink/60 outline-none transition focus:border-accent-bright focus:ring-2 focus:ring-accent-bright/20">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-semibold text-ink-strong">Email <span class="text-accent-bright">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="vous@commerce.fr" class="mt-1.5 block w-full rounded-xl border border-white/10 bg-base/60 p-3.5 text-ink-strong placeholder-ink/60 outline-none transition focus:border-accent-bright focus:ring-2 focus:ring-accent-bright/20">
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                    <div>
+                        <label for="commerce" class="block text-sm font-semibold text-ink-strong">Nom du commerce <span class="text-accent-bright">*</span></label>
+                        <input type="text" id="commerce" name="commerce" required placeholder="Boulangerie Du Pont" class="mt-1.5 block w-full rounded-xl border border-white/10 bg-base/60 p-3.5 text-ink-strong placeholder-ink/60 outline-none transition focus:border-accent-bright focus:ring-2 focus:ring-accent-bright/20">
+                    </div>
+                    <div>
+                        <label for="telephone" class="block text-sm font-semibold text-ink-strong">Téléphone <span class="text-ink font-normal">(optionnel)</span></label>
+                        <input type="tel" id="telephone" name="telephone" placeholder="06 12 34 56 78" class="mt-1.5 block w-full rounded-xl border border-white/10 bg-base/60 p-3.5 text-ink-strong placeholder-ink/60 outline-none transition focus:border-accent-bright focus:ring-2 focus:ring-accent-bright/20">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="demande" class="block text-sm font-semibold text-ink-strong">Votre demande <span class="text-accent-bright">*</span></label>
+                    <select id="demande" name="demande" required class="mt-1.5 block w-full rounded-xl border border-white/10 bg-base/60 p-3.5 text-ink-strong outline-none transition focus:border-accent-bright focus:ring-2 focus:ring-accent-bright/20">
+                        <option value="" disabled selected>Choisissez une formule…</option>
+                        <option value="essentielle">Formule Essentielle — 40€</option>
+                        <option value="duo">Formule Duo — 70€</option>
+                        <option value="autre">Autre demande commerciale</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="message" class="block text-sm font-semibold text-ink-strong">Message <span class="text-ink font-normal">(optionnel)</span></label>
+                    <textarea id="message" name="message" rows="4" placeholder="Précisez votre besoin : nombre de cartes, couleurs, délai souhaité…" class="mt-1.5 block w-full rounded-xl border border-white/10 bg-base/60 p-3.5 text-ink-strong placeholder-ink/60 outline-none transition focus:border-accent-bright focus:ring-2 focus:ring-accent-bright/20 resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-accent-bright to-accent hover:brightness-110 active:scale-[0.98] text-white font-semibold py-4 transition shadow-glow">
+                    Envoyer ma commande
+                </button>
+                <p class="text-center text-xs text-ink">En envoyant ce formulaire, vous acceptez d'être recontacté concernant votre commande.</p>
+            </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Support & Garantie (WhatsApp uniquement) ============ -->
+    <section id="support" class="scroll-mt-24 py-24 border-t border-white/5 bg-surface/30">
+        <div class="mx-auto max-w-5xl px-4">
+            <div class="reveal grid md:grid-cols-[1.5fr_1fr] gap-8 items-center rounded-3xl border-grad p-8 md:p-12">
+                <div class="space-y-4">
+                    <span class="inline-flex items-center gap-2 rounded-full border border-wa/20 bg-wa/10 px-3 py-1 text-xs font-medium text-wa">
+                        Support &amp; Garantie
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">Un souci avec votre carte ? On s'en occupe.</h2>
+                    <p class="text-ink leading-relaxed">
+                        Notre support vous répond directement sur WhatsApp : pas de formulaire, pas d'attente. Un message, une solution. Toutes nos cartes sont garanties et reprogrammables.
+                    </p>
+                    <ul class="grid sm:grid-cols-2 gap-2.5 text-sm text-ink-strong pt-1">
+                        <li class="flex items-center gap-2.5"><svg class="h-4 w-4 text-wa shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>Garantie 3 à 6 mois</li>
+                        <li class="flex items-center gap-2.5"><svg class="h-4 w-4 text-wa shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Remplacement gratuit</li>
+                        <li class="flex items-center gap-2.5"><svg class="h-4 w-4 text-wa shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992M2.985 19.644l3.181-3.183m9.41 0l3.181 3.183M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182"/></svg>Reprogrammation du lien</li>
+                        <li class="flex items-center gap-2.5"><svg class="h-4 w-4 text-wa shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Réponse rapide</li>
+                    </ul>
+                </div>
+                <div class="text-center">
+                    <!-- TODO: remplacer le numéro WhatsApp (const WHATSAPP_NUMBER) -->
+                    <a data-wa data-wa-text="Bonjour, j'ai un souci avec ma carte TapAvis..." class="inline-flex flex-col items-center gap-2 rounded-3xl bg-wa hover:bg-wa-dark px-7 py-8 text-white font-bold transition shadow-lg shadow-wa/20 active:scale-95">
+                        <svg class="h-10 w-10" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        <span class="text-lg">Contacter le support</span>
+                        <span class="text-xs font-medium opacity-90">via WhatsApp</span>
+                    </a>
+                    <p class="text-xs text-ink mt-3">Du lundi au samedi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FAQ (accordéon) ============ -->
+    <section id="faq" class="scroll-mt-24 py-24 border-t border-white/5">
+        <div class="mx-auto max-w-3xl px-4">
+            <div class="reveal text-center space-y-3 mb-12">
+                <span class="text-accent-soft text-xs font-semibold uppercase tracking-wider">FAQ</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Questions fréquentes</h2>
+                <p class="text-ink">Tout ce qu'il faut savoir avant de commander votre carte TapAvis.</p>
+            </div>
+
+            <div class="reveal space-y-3">
+                <!-- Q1 -->
+                <div class="rounded-2xl border border-white/10 bg-surface/40 hover:border-white/20 transition-colors duration-200">
+                    <button onclick="toggleFAQ(this)" class="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink-strong">
+                        <span>La carte est-elle compatible iPhone et Android ?</span>
+                        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-accent-bright/10 text-accent-bright text-xl leading-none transition-transform duration-200">+</span>
+                    </button>
+                    <div class="hidden px-5 pb-5 text-sm text-ink leading-relaxed">
+                        Oui, totalement. La carte fonctionne par contact NFC avec tous les smartphones récents, iPhone comme Android. Il suffit d'approcher le téléphone de la carte pour ouvrir la page d'avis Google.
+                    </div>
+                </div>
+                <!-- Q2 -->
+                <div class="rounded-2xl border border-white/10 bg-surface/40 hover:border-white/20 transition-colors duration-200">
+                    <button onclick="toggleFAQ(this)" class="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink-strong">
+                        <span>Quel est le délai de livraison ?</span>
+                        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-accent-bright/10 text-accent-bright text-xl leading-none transition-transform duration-200">+</span>
+                    </button>
+                    <div class="hidden px-5 pb-5 text-sm text-ink leading-relaxed">
+                        Votre carte est programmée puis expédiée sous 24 à 48h. Comptez ensuite 2 à 4 jours ouvrés pour la livraison. Un suivi vous est envoyé par email ou WhatsApp.
+                    </div>
+                </div>
+                <!-- Q3 -->
+                <div class="rounded-2xl border border-white/10 bg-surface/40 hover:border-white/20 transition-colors duration-200">
+                    <button onclick="toggleFAQ(this)" class="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink-strong">
+                        <span>Faut-il installer une application ?</span>
+                        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-accent-bright/10 text-accent-bright text-xl leading-none transition-transform duration-200">+</span>
+                    </button>
+                    <div class="hidden px-5 pb-5 text-sm text-ink leading-relaxed">
+                        Non, aucune application à installer, ni pour vous ni pour vos clients. La technologie NFC est native sur les smartphones : le simple contact ouvre directement la bonne page, sans étape intermédiaire.
+                    </div>
+                </div>
+                <!-- Q4 -->
+                <div class="rounded-2xl border border-white/10 bg-surface/40 hover:border-white/20 transition-colors duration-200">
+                    <button onclick="toggleFAQ(this)" class="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink-strong">
+                        <span>Comment fonctionne la garantie ?</span>
+                        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-accent-bright/10 text-accent-bright text-xl leading-none transition-transform duration-200">+</span>
+                    </button>
+                    <div class="hidden px-5 pb-5 text-sm text-ink leading-relaxed">
+                        Chaque carte est garantie 3 mois (formule Essentielle) à 6 mois (formule Duo). En cas de dysfonctionnement, contactez-nous sur WhatsApp : nous remplaçons ou reprogrammons gratuitement votre carte.
+                    </div>
+                </div>
+                <!-- Q5 -->
+                <div class="rounded-2xl border border-white/10 bg-surface/40 hover:border-white/20 transition-colors duration-200">
+                    <button onclick="toggleFAQ(this)" class="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink-strong">
+                        <span>Comment vais-je recevoir ma carte ?</span>
+                        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-accent-bright/10 text-accent-bright text-xl leading-none transition-transform duration-200">+</span>
+                    </button>
+                    <div class="hidden px-5 pb-5 text-sm text-ink leading-relaxed">
+                        Vous commandez via le formulaire ci-dessus en choisissant votre formule. Nous programmons votre carte avec votre lien d'avis Google, puis nous vous l'expédions prête à l'emploi. À la réception, elle fonctionne immédiatement.
+                    </div>
+                </div>
+                <!-- Q6 -->
+                <div class="rounded-2xl border border-white/10 bg-surface/40 hover:border-white/20 transition-colors duration-200">
+                    <button onclick="toggleFAQ(this)" class="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink-strong">
+                        <span>Puis-je changer mon lien d'avis Google plus tard ?</span>
+                        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-accent-bright/10 text-accent-bright text-xl leading-none transition-transform duration-200">+</span>
+                    </button>
+                    <div class="hidden px-5 pb-5 text-sm text-ink leading-relaxed">
+                        Oui. Si vous changez de fiche Google ou d'établissement, nous reprogrammons gratuitement le lien de votre carte. Une simple demande sur WhatsApp suffit.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Footer ============ -->
+    <footer class="border-t border-white/5 bg-surface/30">
+        <div class="mx-auto max-w-6xl px-4 py-14">
+            <div class="grid gap-10 md:grid-cols-3">
+                <!-- Marque -->
+                <div class="space-y-3">
+                    <a href="#hero" class="flex items-center gap-2.5">
+                        <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-tr from-accent to-accent-bright text-white">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M7 10c.5.8.5 2.2 0 3M9.5 8.5c1 1.5 1 4.5 0 6" stroke-linecap="round"/></svg>
+                        </span>
+                        <span class="text-lg font-extrabold tracking-tight text-white">Tap<span class="text-accent-bright">Avis</span></span>
+                    </a>
+                    <p class="text-sm text-ink leading-relaxed max-w-xs">La carte NFC premium qui transforme vos clients satisfaits en avis Google. Sans application, sans abonnement, réutilisable à vie.</p>
+                    <!-- Réseaux sociaux -->
+                    <!-- TODO: remplacer les liens des réseaux sociaux -->
+                    <div class="flex items-center gap-2 pt-1">
+                        <a href="#" aria-label="Instagram" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-ink hover:text-white hover:border-white/30 transition">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 01-1.38-.9 3.7 3.7 0 01-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 1.8c-3.15 0-3.5.01-4.74.07-.95.04-1.47.2-1.81.34-.46.18-.78.39-1.12.73-.34.34-.55.66-.73 1.12-.14.34-.3.86-.34 1.81-.06 1.24-.07 1.59-.07 4.74s.01 3.5.07 4.74c.04.95.2 1.47.34 1.81.18.46.39.78.73 1.12.34.34.66.55 1.12.73.34.14.86.3 1.81.34 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.95-.04 1.47-.2 1.81-.34.46-.18.78-.39 1.12-.73.34-.34.55-.66.73-1.12.14-.34.3-.86.34-1.81.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.95-.2-1.47-.34-1.81a3.02 3.02 0 00-.73-1.12 3.02 3.02 0 00-1.12-.73c-.34-.14-.86-.3-1.81-.34-1.24-.06-1.59-.07-4.74-.07zm0 3.06a4.98 4.98 0 110 9.96 4.98 4.98 0 010-9.96zm0 1.8a3.18 3.18 0 100 6.36 3.18 3.18 0 000-6.36zm5.18-.9a1.16 1.16 0 11-2.32 0 1.16 1.16 0 012.32 0z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Facebook" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-ink hover:text-white hover:border-white/30 transition">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0022 12z"/></svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn" class="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-ink hover:text-white hover:border-white/30 transition">
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.74v20.52C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.74V1.74C24 .78 23.2 0 22.22 0z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-ink-strong uppercase tracking-wider">Navigation</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#pourquoi" class="text-ink hover:text-accent-bright transition">Pourquoi nous faire confiance</a></li>
+                        <li><a href="#tarifs" class="text-ink hover:text-accent-bright transition">Nos tarifs</a></li>
+                        <li><a href="#faq" class="text-ink hover:text-accent-bright transition">FAQ</a></li>
+                        <li><a href="#commande" class="text-ink hover:text-accent-bright transition">Commander</a></li>
+                        <li><a href="#support" class="text-ink hover:text-accent-bright transition">Support &amp; Garantie</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact / WhatsApp -->
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-ink-strong uppercase tracking-wider">Besoin d'aide ?</h4>
+                    <p class="text-sm text-ink">Notre support vous répond sur WhatsApp, du lundi au samedi.</p>
+                    <!-- TODO: remplacer le numéro WhatsApp (const WHATSAPP_NUMBER) -->
+                    <a data-wa data-wa-text="Bonjour, j'ai une question sur TapAvis" class="inline-flex items-center gap-2 rounded-xl bg-wa hover:bg-wa-dark px-5 py-3 text-sm font-semibold text-white transition active:scale-95">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        Écrire sur WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/5 pt-6">
+                <!-- TODO: créer les pages CGV / Mentions légales (liens placeholder) -->
+                <p class="text-xs text-ink">&copy; <span id="year">2026</span> TapAvis. Tous droits réservés.</p>
+                <div class="flex items-center gap-5 text-xs">
+                    <a href="#" class="text-ink hover:text-accent-bright transition">Mentions légales</a>
+                    <a href="#" class="text-ink hover:text-accent-bright transition">CGV</a>
+                </div>
+            </div>
+            <p class="mt-4 text-[11px] text-ink/60 text-center">Google et ses logos sont des marques déposées de Google LLC. TapAvis n'est pas affilié à Google.</p>
+        </div>
+    </footer>
+
+    <!-- Toast de confirmation -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-2xl bg-wa px-5 py-4 text-white shadow-2xl transition-all duration-300 translate-y-16 opacity-0 pointer-events-none">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        <span class="text-sm font-medium">Commande envoyée ! Nous vous recontactons vite.</span>
+    </div>
+
+    <!-- ============ Logique JavaScript ============ -->
+    <script>
+        /* =========================================================
+         *  PLACEHOLDERS À REMPLACER
+         *  - WHATSAPP_NUMBER : numéro WhatsApp (format international, sans +)
+         *  - Formspree : identifiant dans l'attribut action du formulaire (#order-form)
+         * ========================================================= */
+        const WHATSAPP_NUMBER = '33695414386'; // ← REMPLACER (ex: '33612345678')
+
+        /* ---------- Liens WhatsApp (une seule source de vérité) ---------- */
+        document.querySelectorAll('[data-wa]').forEach(el => {
+            const text = el.getAttribute('data-wa-text') || "Bonjour, j'ai une question sur TapAvis";
+            el.setAttribute('href', `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`);
+            el.setAttribute('target', '_blank');
+            el.setAttribute('rel', 'noopener');
+        });
+
+        /* ---------- Année courante (footer) ---------- */
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        /* ---------- Menu mobile ---------- */
+        const navToggle = document.getElementById('nav-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        navToggle.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        /* ---------- Apparition au scroll (fade / slide) ---------- */
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        /* ---------- Accordéon FAQ ---------- */
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('span:last-child');
+            content.classList.toggle('hidden');
+            if (content.classList.contains('hidden')) {
+                icon.textContent = '+';
+                icon.classList.remove('rotate-45');
+            } else {
+                icon.textContent = '×';
+                icon.classList.add('rotate-45');
+            }
+        }
+
+        /* ---------- Pré-remplissage du formulaire depuis une formule ---------- */
+        function choisirFormule(value) {
+            const select = document.getElementById('demande');
+            if (select && [...select.options].some(o => o.value === value)) {
+                select.value = value;
+            }
+            const target = document.getElementById('commande');
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Au chargement : lire ?formule= dans l'URL et pré-remplir (+ smooth scroll)
+        (function initFormuleFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const formule = params.get('formule');
+            if (formule) choisirFormule(formule);
+        })();
+
+        /* ---------- Envoi du formulaire (Formspree via fetch) ---------- */
+        function handleOrderSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = form.querySelector('button[type="submit"]');
+            const originalLabel = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Envoi en cours…';
+
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' },
+            })
+                .then(async response => {
+                    if (response.ok) return;
+                    const data = await response.json().catch(() => ({}));
+                    throw data;
+                })
+                .then(() => {
+                    form.classList.add('hidden');
+                    document.getElementById('order-success').classList.remove('hidden');
+                    showToast();
+                    form.reset();
+                })
+                .catch(err => {
+                    let msg = "Une erreur est survenue lors de l'envoi. Merci de réessayer ou de nous contacter sur WhatsApp.";
+                    if (err && Array.isArray(err.errors) && err.errors.length) {
+                        msg = err.errors.map(e => e.message).join(' ');
+                    }
+                    alert(msg);
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.textContent = originalLabel;
+                });
+        }
+
+        function recommencerCommande() {
+            const form = document.getElementById('order-form');
+            document.getElementById('order-success').classList.add('hidden');
+            form.classList.remove('hidden');
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        /* ---------- Toast ---------- */
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-16', 'opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('translate-y-16', 'opacity-0', 'pointer-events-none');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
